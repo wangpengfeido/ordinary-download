@@ -5,11 +5,17 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
+    minWidth: 800,
+    minHeight: 600,
     webPreferences: {
       // 使渲染进程可以使用 node api
       nodeIntegration: true,
     },
   });
+
+  // 隐藏菜单栏
+  win.setMenu(null);
+
   // 加载html
   if (process.env.NODE_ENV === 'development') {
     win.loadURL('http://localhost:9091');
