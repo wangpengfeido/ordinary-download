@@ -11,7 +11,7 @@ module.exports = {
   output: {},
   resolve: {
     alias: {
-      src: path.resolve(__dirname, '../src/renderer/'),
+      renderer: path.resolve(__dirname, '../src/renderer/'),
     },
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
   },

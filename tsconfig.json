@@ -17,7 +17,7 @@
     "noEmit": true,
     "jsx": "react",
     "paths": {
-      "src/*": ["./src/*"]
+      "renderer/*": ["./src/renderer/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
