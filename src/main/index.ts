@@ -1,4 +1,6 @@
+import path from 'path';
 import { app, BrowserWindow } from 'electron';
+import { createRendererApi } from './renderer-api';
 
 function createWindow() {
   // 创建浏览器窗口
@@ -8,8 +10,8 @@ function createWindow() {
     minWidth: 800,
     minHeight: 600,
     webPreferences: {
-      // 使渲染进程可以使用 node api
-      nodeIntegration: true,
+      contextIsolation: true,
+      preload: path.join(__dirname, './preload/preload.js'),
     },
   });
 
@@ -28,7 +30,11 @@ function createWindow() {
 
 // Electron 会在初始化后并准备创建浏览器窗口时，调用这个函数。
 // 部分 API 在 ready 事件触发后才能使用。
-app.on('ready', createWindow);
+app.on('ready', () => {
+  createRendererApi();
+
+  createWindow();
+});
 
 // 应用激活事件
 app.on('activate', () => {

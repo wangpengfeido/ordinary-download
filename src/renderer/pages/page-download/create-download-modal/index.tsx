@@ -2,6 +2,8 @@ import React, { ForwardRefRenderFunction, useImperativeHandle, useState } from '
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
 
 interface IProps {}
 
@@ -33,7 +35,21 @@ const CreateDownloadModal: ForwardRefRenderFunction<IRefCreateDownloadModal, IPr
       }}
     >
       <DialogTitle>新建下载</DialogTitle>
-      <DialogContent>下载</DialogContent>
+      <DialogContent>
+        <FormControl fullWidth>
+          <InputLabel htmlFor="component-outlined">Name</InputLabel>
+          {/* <Input></Input> */}
+          <input></input>
+          {/* <div
+            onClick={async () => {
+              const res = await window.ordinary_download_api.openFile();
+              console.log('-----------------', res);
+            }}
+          >
+            选择文件
+          </div> */}
+        </FormControl>
+      </DialogContent>
     </Dialog>
   );
 };
