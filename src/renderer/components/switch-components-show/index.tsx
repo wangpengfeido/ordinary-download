@@ -23,4 +23,5 @@ const SwitchComponentsShow: FC<IProps> = ({ current, components }) => {
   );
 };
 
+/** 多个组件间的展示切换 */
 export default React.memo(SwitchComponentsShow);

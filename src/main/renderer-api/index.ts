@@ -1,13 +1,18 @@
-import { ipcMain, dialog } from 'electron';
+import { ipcMain, dialog, BrowserWindow } from 'electron';
 
 /** 提供给渲染进程的 API */
 export function createRendererApi() {
-  ipcMain.handle('dialog:openFile', async () => {
-    const { canceled, filePaths } = await dialog.showOpenDialog({});
-    if (canceled) {
-      return;
-    } else {
-      return filePaths[0];
+  ipcMain.handle('dialog:select-folder', async event => {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    if (win) {
+      const { canceled, filePaths } = await dialog.showOpenDialog(win, {
+        properties: ['openDirectory'],
+      });
+      if (canceled) {
+        return;
+      } else {
+        return filePaths[0];
+      }
     }
   });
 }
