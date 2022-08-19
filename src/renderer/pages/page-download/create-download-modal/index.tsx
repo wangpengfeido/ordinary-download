@@ -8,9 +8,9 @@ import FormLabel from '@mui/material/FormLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import DialogActions from '@mui/material/DialogActions';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { FormHelperText } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import SystemFolderSelect from 'renderer/components/form-widget/system-folder-select';
-import { FormHelperText } from '@mui/material';
 
 interface IFormCreateDownload {
   downloadSrcCode: string;
@@ -29,7 +29,18 @@ const CreateDownloadModal: ForwardRefRenderFunction<IRefCreateDownloadModal, IPr
 ) => {
   const [visible, setVisible] = useState(false);
 
-  const { control, handleSubmit } = useForm<IFormCreateDownload>();
+  const { control, handleSubmit } = useForm<IFormCreateDownload>({
+    defaultValues: {
+      downloadSrcCode: `ordinaryDownload.downloadSrc = {
+  source: [
+    { url: 'http://a.com' },
+    { url: 'http://b.com' },
+    { url: 'http://c.com' },
+    { url: 'http://d.com' },
+  ],
+};`,
+    },
+  });
 
   useImperativeHandle(ref, () => {
     return {
@@ -87,7 +98,7 @@ const CreateDownloadModal: ForwardRefRenderFunction<IRefCreateDownloadModal, IPr
           variant="contained"
           onClick={() => {
             handleSubmit(data => {
-              console.log('11111111111111', data);
+              window.ordinary_download_api.createDownload(data);
             })();
           }}
         >
