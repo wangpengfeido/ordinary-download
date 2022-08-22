@@ -34,9 +34,6 @@ const CreateDownloadModal: ForwardRefRenderFunction<IRefCreateDownloadModal, IPr
       downloadSrcCode: `ordinaryDownload.downloadSrc = {
   source: [
     { url: 'http://a.com' },
-    { url: 'http://b.com' },
-    { url: 'http://c.com' },
-    { url: 'http://d.com' },
   ],
 };`,
     },
