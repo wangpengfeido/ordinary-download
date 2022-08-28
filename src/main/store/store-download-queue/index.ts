@@ -22,7 +22,7 @@ class StoreDownloadQueue extends Subject<TDownloadQueue> {
   addDownloadItems(params: { value: TDownloadQueue }) {
     const { value } = params;
 
-    this.next([...value, ...this.downloadQueue]);
+    this.next([...this.downloadQueue, ...value]);
   }
 
   updateUpdatePercent(params: { id: string; percent: number }) {
@@ -36,6 +36,15 @@ class StoreDownloadQueue extends Subject<TDownloadQueue> {
     });
 
     this.next(newQueue);
+  }
+
+  getLatestNotOverDownload(): IDownloadQueueItem | null {
+    for (const item of this.downloadQueue) {
+      if (item.percent < 1) {
+        return item;
+      }
+    }
+    return null;
   }
 }
 

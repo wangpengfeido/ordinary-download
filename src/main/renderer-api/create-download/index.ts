@@ -1,5 +1,7 @@
 import { ipcMain } from 'electron';
 import { VM } from 'vm2';
+import { uniqueId } from 'lodash';
+import { storeDownloadQueue } from '../../store/store-download-queue';
 
 export interface ICreateDownload {
   downloadSrcCode: string;
@@ -25,9 +27,35 @@ export function createDownload() {
       vm.run(data.downloadSrcCode);
     } catch (error) {
       errorMessage = (error as any).toString();
+      return {
+        code: -1,
+        message: errorMessage,
+      };
     }
 
-    console.log(data, errorMessage);
-    console.log('--', JSON.stringify(ordinaryDownload));
+    if (!ordinaryDownload.downloadSrc?.source) {
+      return {
+        code: -1,
+        message: '数据不合法',
+      };
+    }
+    for (const item of ordinaryDownload.downloadSrc.source || []) {
+      if (!item.url) {
+        return {
+          code: -1,
+          message: '数据不合法',
+        };
+      }
+    }
+
+    storeDownloadQueue.addDownloadItems({
+      value: ordinaryDownload.downloadSrc.source.map(item => {
+        return {
+          id: uniqueId(),
+          url: item.url,
+          percent: 0,
+        };
+      }),
+    });
   });
 }
