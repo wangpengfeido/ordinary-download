@@ -1,7 +1,6 @@
 import path from 'path';
 import { app, BrowserWindow } from 'electron';
 import { createRendererApi } from './renderer-api';
-import { registerDownloadTask } from './main-logic/download-task';
 
 function createWindow() {
   // 创建浏览器窗口
@@ -33,8 +32,6 @@ function createWindow() {
 // 部分 API 在 ready 事件触发后才能使用。
 app.on('ready', () => {
   createRendererApi();
-
-  registerDownloadTask();
 
   createWindow();
 });

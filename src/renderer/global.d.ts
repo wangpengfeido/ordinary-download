@@ -6,6 +6,8 @@ interface OrdinaryDownloadApi_ICreateDownload {
 interface Window {
   ordinary_download_api: {
     selectFolder: () => Promise<string>;
-    createDownload: (data: OrdinaryDownloadApi_ICreateDownload) => Promise<string>;
+    createDownload: (
+      data: OrdinaryDownloadApi_ICreateDownload,
+    ) => Promise<{ code: -1 | 1; message: string }>;
   };
 }

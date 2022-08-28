@@ -9,6 +9,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import DialogActions from '@mui/material/DialogActions';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { FormHelperText } from '@mui/material';
+import { useSnackbar } from 'notistack';
 import { useForm, Controller } from 'react-hook-form';
 import SystemFolderSelect from 'renderer/components/form-widget/system-folder-select';
 
@@ -27,13 +28,15 @@ const CreateDownloadModal: ForwardRefRenderFunction<IRefCreateDownloadModal, IPr
   props,
   ref,
 ) => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const [visible, setVisible] = useState(false);
 
   const { control, handleSubmit } = useForm<IFormCreateDownload>({
     defaultValues: {
       downloadSrcCode: `ordinaryDownload.downloadSrc = {
   source: [
-    { url: 'http://a.com' },
+    { url: 'http://a.com', requestHeaders:{} },
   ],
 };`,
     },
@@ -94,8 +97,12 @@ const CreateDownloadModal: ForwardRefRenderFunction<IRefCreateDownloadModal, IPr
         <LoadingButton
           variant="contained"
           onClick={() => {
-            handleSubmit(data => {
-              window.ordinary_download_api.createDownload(data);
+            handleSubmit(async data => {
+              console.log('-----', data);
+              enqueueSnackbar('test', { variant: 'success' });
+              // const res = await window.ordinary_download_api.createDownload(data);
+              // if (res.code !== 1) {
+              // }
             })();
           }}
         >

@@ -3,7 +3,11 @@ import { Subject } from 'rxjs';
 interface IDownloadQueueItem {
   id: string;
   url: string;
+  /** 下载进度。[0,1] */
   percent: number;
+  targetFolder: string;
+  targetFileName: string;
+  requestHeaders?: Record<string, string>;
 }
 
 type TDownloadQueue = Array<IDownloadQueueItem>;
